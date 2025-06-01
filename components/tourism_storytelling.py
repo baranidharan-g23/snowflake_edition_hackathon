@@ -90,8 +90,11 @@ def show_tourism_storytelling():
         dance_df = load_dance_data()
         festivals_df = load_festivals_data()
 
-        # Load domestic data separately (using same source as total for now)
-        state_domestic_df = load_state_tourism_data()
+        # Load domestic data separately
+        try:
+            state_domestic_df = pd.read_csv('Datasets/State_Wise_Domestic_Tourist_Arrivals_2017_2023.csv')
+        except:
+            state_domestic_df = pd.DataFrame()
 
     # Chapter Content
     if selected_chapter == "🏛️ Chapter 1: The Heritage Heartbeat":

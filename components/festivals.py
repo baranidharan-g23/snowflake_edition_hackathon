@@ -173,7 +173,7 @@ def show_monthly_festival_chart(festivals_df):
         y='Festival Count',
         title="📊 Festival Calendar - Monthly Distribution",
         color='Festival Count',
-        color_continuous_scale=['#FF6B6B', '#FFEAA7'],
+        color_continuous_scale=["#8D2207", "#FF0000", "#FF6200", "#E19909", "#FFE600"],
         text='Festival Count'
     )
 
@@ -222,7 +222,7 @@ def show_monthly_festival_chart(festivals_df):
 
 def show_festivals_section(festivals_df):
     """Display festivals information with beautiful card layout"""
-    st.markdown('<h2 class="section-header">🎪 Indian Festivals</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header" style="color: white;">🎪 Indian Festivals</h2>', unsafe_allow_html=True)
 
     if festivals_df.empty:
         st.warning("No festival data available")
@@ -389,28 +389,96 @@ def display_festival_card(festival, stage_name="FESTIVAL_IMAGES"):
         if image_info["exists"]:
             image_data = get_festival_image_from_stage(stage_name, image_filename)
 
-    # Create a beautiful card layout using Streamlit columns
-    with st.container():
-        st.markdown("""
-        <div style="background: white; padding: 2rem; margin: 2rem 0; border-radius: 20px;
-                    box-shadow: 0 15px 35px rgba(0,0,0,0.15); border: 3px solid #4ECDC4;">
-        """, unsafe_allow_html=True)
+    # Create the entire card using a different approach - custom CSS with data attributes
+    card_id = f"festival-card-{festival_name.replace(' ', '-').lower()}"
 
-        col1, col2 = st.columns([1, 2])
+    # Add custom CSS for this specific card
+    st.markdown(f"""
+    <style>
+    #{card_id} {{
+        background: white !important;
+        padding: 2rem !important;
+        margin: 2rem 0 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
+        border: 3px solid #4ECDC4 !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 2rem !important;
+        min-height: 300px !important;
+    }}
+    #{card_id} .image-section {{
+        flex: 1 !important;
+        max-width: 350px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 300px !important;
+    }}
+    #{card_id} .content-section {{
+        flex: 2 !important;
+        padding-left: 1rem !important;
+    }}
+    #{card_id} .image-container {{
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 100% !important;
+    }}
+    #{card_id} img {{
+        border-radius: 15px !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+        max-width: 100% !important;
+        max-height: 250px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+    }}
+    </style>
+    """, unsafe_allow_html=True)
 
-        with col1:
-            # Display image or placeholder
-            if image_data:
-                try:
-                    st.image(image_data, use_container_width=True)
-                except Exception as e:
-                    show_festival_placeholder(festival_name)
-            else:
-                show_festival_placeholder(festival_name)
+    # Get image HTML using Snowflake data
+    if image_data:
+        try:
+            # Convert image data to base64 for embedding
+            import base64
+            img_str = base64.b64encode(image_data).decode()
+            image_html = f'<div class="image-container"><img src="data:image/jpeg;base64,{img_str}" alt="{festival_name}"></div>'
+        except:
+            image_html = f"""
+            <div class="image-container">
+                <div style="height: 250px; display: flex; align-items: center; justify-content: center;
+                            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+                            border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎪</div>
+                        <div style="font-size: 1rem; font-weight: bold; opacity: 0.9;">{festival_name}</div>
+                    </div>
+                </div>
+            </div>
+            """
+    else:
+        image_html = f"""
+        <div class="image-container">
+            <div style="height: 250px; display: flex; align-items: center; justify-content: center;
+                        background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+                        border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                <div style="text-align: center; color: white;">
+                    <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🎪</div>
+                    <div style="font-size: 1rem; font-weight: bold; opacity: 0.9;">{festival_name}</div>
+                </div>
+            </div>
+        </div>
+        """
 
-        with col2:
-            # Festival information
-            st.markdown(f"""
+    # Create the complete card as a single HTML block
+    st.markdown(f"""
+    <div id="{card_id}">
+        <div class="image-section">
+            {image_html}
+        </div>
+        <div class="content-section">
             <h2 style="color: #008080; font-family: 'Playfair Display', serif;
                        font-size: 2rem; margin-bottom: 1rem; font-weight: bold;">
                 🎭 {festival['FESTIVAL_NAME']}
@@ -426,9 +494,9 @@ def display_festival_card(festival, stage_name="FESTIVAL_IMAGES"):
             <div style="color: #333; line-height: 1.6; font-family: 'Poppins', sans-serif; font-size: 0.95rem;">
                 {festival['DESCRIPTION']}
             </div>
-            """, unsafe_allow_html=True)
-
-        st.markdown("</div>", unsafe_allow_html=True)
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Add spacing between cards
     st.markdown("<br>", unsafe_allow_html=True)

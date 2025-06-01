@@ -150,7 +150,7 @@ def show_automatic_dance_slideshow(dance_df):
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Create centered navigation container
-    nav_col1, nav_col2, nav_col3, nav_col4, nav_col5 = st.columns([2, 1, 1, 1, 2])
+    nav_col1, nav_col2, nav_col3, nav_col4, nav_col5 = st.columns([1, 0.5, 2, 0.5, 1])
 
     with nav_col2:
         if st.button("◀", key="prev_dance", help="Previous dance", use_container_width=True):

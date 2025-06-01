@@ -39,13 +39,13 @@ def apply_custom_css():
             right: 0;
             bottom: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
+            opacity: 0.5;
         }
 
         .hero-title {
             font-family: 'Playfair Display', serif;
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: 800;
             color: white;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
@@ -834,6 +834,7 @@ def apply_sidebar_styles():
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
+                color: white;
             }
             .hero-subtitle {
                 font-size: 1.1rem;

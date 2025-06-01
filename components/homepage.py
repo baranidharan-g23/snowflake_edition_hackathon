@@ -65,8 +65,8 @@ def show_homepage(festivals_df, ita_df, state_tourism_df, tourism_gdp_df=None, t
     # Hero Section
     st.markdown("""
     <div class="hero-section">
-        <h1 class="hero-title">🇮🇳 भारत की सांस्कृतिक विरासत</h1>
-        <h1 class="hero-title">Indian Cultural Heritage & Tourism</h1>
+        <h1 class="hero-title" style="color: white;">🇮🇳 भारत की सांस्कृतिक विरासत</h1>
+        <h1 class="hero-title" style="color: white;">Indian Cultural Heritage & Tourism</h1>
         <p class="hero-subtitle">Discover India's Rich Cultural Tapestry Through Data-Driven Insights</p>
         <p class="hero-subtitle">🌟 Preserving Traditions • Exploring Heritage • Celebrating Diversity 🌟</p>
     </div>
@@ -180,7 +180,7 @@ def show_homepage(festivals_df, ita_df, state_tourism_df, tourism_gdp_df=None, t
     create_tourism_story_section(ita_df, tourism_gdp_df, tourism_employment_df)
 
     # Interactive India Map Section
-    st.markdown('<h2 class="section-header">🗺️ Explore India</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 class="section-header" style="color: white;">🗺️ Explore India</h2>', unsafe_allow_html=True)
 
     # Create an interactive map of India with state-wise tourism data
     if not state_tourism_df.empty:
@@ -553,7 +553,7 @@ def create_tourism_story_section(ita_df, tourism_gdp_df, tourism_employment_df):
     if not ita_df.empty:
 
         # Interactive Tourism Trend Visualization
-        st.markdown('<h3 style="color: #667eea; text-align: center; margin: 2rem 0 1rem 0;">📊 India\'s Tourism Journey Through Time</h3>', unsafe_allow_html=True)
+        st.markdown('<h3 style="color: white; text-align: center; margin: 2rem 0 1rem 0;">📊 India\'s Tourism Journey Through Time</h3>', unsafe_allow_html=True)
         fig_trend = create_tourism_growth_trend_chart(ita_df)
         st.plotly_chart(fig_trend, use_container_width=True)
 
